@@ -34,17 +34,50 @@ namespace WinFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            CryptographyService.InitKeyAndIV();
+            textBox5.Text = CryptographyService.Key;
+            textBox6.Text = CryptographyService.IV;
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-
+            CryptographyService.Key = textBox5.Text;
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
+             CryptographyService.IV = textBox6.Text;
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var bytes = Encoding.ASCII.GetBytes(textBox1.Text);
+            var hex = CryptographyService.Encrypt(bytes);
+            textBox2.Text = Encoding.ASCII.GetString(hex);
+            label3.Text = CryptographyService.EncryptTime.ElapsedMilliseconds.ToString() + " ms";
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var bytes = Encoding.ASCII.GetBytes(textBox3.Text);
+            var ascii = CryptographyService.Decrypt(bytes);
+            textBox4.Text = Encoding.ASCII.GetString(ascii);
+            label12.Text = CryptographyService.DecryptTime.ElapsedMilliseconds.ToString() + " ms";
         }
     }
 }

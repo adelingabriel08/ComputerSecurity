@@ -40,7 +40,6 @@ namespace WinFormsApp1
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
@@ -51,11 +50,11 @@ namespace WinFormsApp1
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label3 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -94,6 +93,7 @@ namespace WinFormsApp1
             this.button2.TabIndex = 3;
             this.button2.Text = "Encrypt";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox1
             // 
@@ -115,6 +115,7 @@ namespace WinFormsApp1
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(245, 23);
             this.textBox3.TabIndex = 8;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
@@ -122,6 +123,7 @@ namespace WinFormsApp1
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(285, 23);
             this.textBox4.TabIndex = 7;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // button3
             // 
@@ -131,24 +133,16 @@ namespace WinFormsApp1
             this.button3.TabIndex = 6;
             this.button3.Text = "Decrypt";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(112, 327);
+            this.label2.Location = new System.Drawing.Point(119, 297);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(140, 15);
             this.label2.TabIndex = 9;
             this.label2.Text = "Time required to decrypt:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(133, 183);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 15);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Result of encryption:";
             // 
             // label4
             // 
@@ -236,31 +230,14 @@ namespace WinFormsApp1
             this.label11.TabIndex = 20;
             this.label11.Text = "HEX";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(133, 297);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(116, 15);
-            this.label12.TabIndex = 21;
-            this.label12.Text = "Result of decryption:";
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(109, 215);
+            this.label13.Location = new System.Drawing.Point(133, 178);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(140, 15);
             this.label13.TabIndex = 22;
             this.label13.Text = "Time required to encrypt:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(262, 215);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(0, 15);
-            this.label14.TabIndex = 23;
             // 
             // label15
             // 
@@ -275,15 +252,33 @@ namespace WinFormsApp1
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(293, 178);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 15);
+            this.label3.TabIndex = 25;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(277, 297);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(140, 15);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Time required to decrypt:";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -294,7 +289,6 @@ namespace WinFormsApp1
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox4);
@@ -324,7 +318,6 @@ namespace WinFormsApp1
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox5;
@@ -335,11 +328,11 @@ namespace WinFormsApp1
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label12;
     }
 }
 

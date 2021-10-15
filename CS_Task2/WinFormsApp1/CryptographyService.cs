@@ -34,6 +34,7 @@ namespace WinFormsApp1
                     _algorithm = Rijndael.Create();
                     break;
             }
+            _algorithm.Padding = PaddingMode.PKCS7;
             InitKeyAndIV();
 
 
@@ -55,7 +56,7 @@ namespace WinFormsApp1
             Key = Encoding.ASCII.GetString(_algorithm.Key);
         }
 
-        public static byte[] Encrypt(byte[] mess, byte[] key, byte[] iv)
+        public static byte[] Encrypt(byte[] mess)
         {
             EncryptTime.Reset();
             EncryptTime.Start();
@@ -70,7 +71,7 @@ namespace WinFormsApp1
 
         }
 
-        public static byte[] Decrypt(byte[] mess, byte[] key, byte[] iv)
+        public static byte[] Decrypt(byte[] mess)
         {
             DecryptTime.Reset();
             DecryptTime.Start();
