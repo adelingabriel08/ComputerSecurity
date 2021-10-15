@@ -16,8 +16,8 @@ namespace WinFormsApp1
 
         private static SymmetricAlgorithm _algorithm = DES.Create();
 
-        public static string Key { get; set; }
-        public static string IV { get; set; }
+        public static byte[] Key { get; set; }
+        public static byte[] IV { get; set; }
 
 
         public static void SetSymmetricAlgorithm(SymmetricAlgorithmEnum algorithm)
@@ -51,17 +51,17 @@ namespace WinFormsApp1
         public static void InitKeyAndIV()
         {
             _algorithm.GenerateIV();
-            IV = Convert.ToBase64String(_algorithm.IV);
+            IV = _algorithm.IV;
             _algorithm.GenerateKey();
-            Key = Convert.ToBase64String(_algorithm.Key);
+            Key = _algorithm.Key;
         }
 
         public static byte[] Encrypt(byte[] mess)
         {
             EncryptTime.Reset();
             EncryptTime.Start();
-            _algorithm.Key = Encoding.UTF8.GetBytes(Key);
-            _algorithm.IV = Encoding.UTF8.GetBytes(IV);
+            _algorithm.Key = Key;
+            _algorithm.IV = IV;
             MemoryStream ms = new MemoryStream();
             CryptoStream cs = new CryptoStream(ms, _algorithm.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(mess, 0, mess.Length);
@@ -75,8 +75,8 @@ namespace WinFormsApp1
         {
             DecryptTime.Reset();
             DecryptTime.Start();
-            _algorithm.Key = Encoding.UTF8.GetBytes(Key);
-            _algorithm.IV = Encoding.UTF8.GetBytes(IV);
+            _algorithm.Key = Key;
+            _algorithm.IV = IV;
 
             var plaintext = new byte[mess.Length];
             MemoryStream ms = new MemoryStream(mess);
@@ -86,7 +86,5 @@ namespace WinFormsApp1
             DecryptTime.Stop();
             return plaintext;
         }
-
-
     }
 }

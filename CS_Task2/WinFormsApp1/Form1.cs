@@ -27,31 +27,31 @@ namespace WinFormsApp1
         {
             this.comboBox1.DataSource = Enum.GetValues(typeof(SymmetricAlgorithmEnum));
             CryptographyService.InitKeyAndIV();
-            textBox5.Text = CryptographyService.Key;
-            textBox6.Text = CryptographyService.IV;
+            textBox5.Text = Convert.ToBase64String(CryptographyService.Key);
+            textBox6.Text = Convert.ToBase64String(CryptographyService.IV);
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             CryptographyService.InitKeyAndIV();
-            textBox5.Text = CryptographyService.Key;
-            textBox6.Text = CryptographyService.IV;
+            textBox5.Text = Convert.ToBase64String(CryptographyService.Key);
+            textBox6.Text = Convert.ToBase64String(CryptographyService.IV);
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            CryptographyService.Key = textBox5.Text;
+            CryptographyService.Key = Encoding.ASCII.GetBytes(textBox5.Text);
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-             CryptographyService.IV = textBox6.Text;
+             CryptographyService.IV = Encoding.ASCII.GetBytes(textBox6.Text);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var bytes = Encoding.UTF8.GetBytes(textBox1.Text);
+            var bytes = Encoding.ASCII.GetBytes(textBox1.Text);
             var hex = CryptographyService.Encrypt(bytes);
             textBox2.Text = Convert.ToBase64String(hex);
             label3.Text = CryptographyService.EncryptTime.ElapsedMilliseconds.ToString() + " ms";
