@@ -51,9 +51,9 @@ namespace WinFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var bytes = Encoding.ASCII.GetBytes(textBox1.Text);
+            var bytes = Encoding.UTF8.GetBytes(textBox1.Text);
             var hex = CryptographyService.Encrypt(bytes);
-            textBox2.Text = Encoding.ASCII.GetString(hex);
+            textBox2.Text = Convert.ToBase64String(hex);
             label3.Text = CryptographyService.EncryptTime.ElapsedMilliseconds.ToString() + " ms";
         }
 
@@ -74,9 +74,9 @@ namespace WinFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var bytes = Encoding.ASCII.GetBytes(textBox3.Text);
+            var bytes = Encoding.UTF8.GetBytes(textBox3.Text);
             var ascii = CryptographyService.Decrypt(bytes);
-            textBox4.Text = Encoding.ASCII.GetString(ascii);
+            textBox4.Text = Convert.ToBase64String(ascii);
             label12.Text = CryptographyService.DecryptTime.ElapsedMilliseconds.ToString() + " ms";
         }
     }

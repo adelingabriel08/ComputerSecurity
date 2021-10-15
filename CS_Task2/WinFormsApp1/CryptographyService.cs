@@ -51,17 +51,17 @@ namespace WinFormsApp1
         public static void InitKeyAndIV()
         {
             _algorithm.GenerateIV();
-            IV = Encoding.ASCII.GetString(_algorithm.IV);
+            IV = Convert.ToBase64String(_algorithm.IV);
             _algorithm.GenerateKey();
-            Key = Encoding.ASCII.GetString(_algorithm.Key);
+            Key = Convert.ToBase64String(_algorithm.Key);
         }
 
         public static byte[] Encrypt(byte[] mess)
         {
             EncryptTime.Reset();
             EncryptTime.Start();
-            _algorithm.Key = Encoding.ASCII.GetBytes(Key);
-            _algorithm.IV = Encoding.ASCII.GetBytes(IV);
+            _algorithm.Key = Encoding.UTF8.GetBytes(Key);
+            _algorithm.IV = Encoding.UTF8.GetBytes(IV);
             MemoryStream ms = new MemoryStream();
             CryptoStream cs = new CryptoStream(ms, _algorithm.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(mess, 0, mess.Length);
@@ -75,8 +75,8 @@ namespace WinFormsApp1
         {
             DecryptTime.Reset();
             DecryptTime.Start();
-            _algorithm.Key = Encoding.ASCII.GetBytes(Key);
-            _algorithm.IV = Encoding.ASCII.GetBytes(IV);
+            _algorithm.Key = Encoding.UTF8.GetBytes(Key);
+            _algorithm.IV = Encoding.UTF8.GetBytes(IV);
 
             var plaintext = new byte[mess.Length];
             MemoryStream ms = new MemoryStream(mess);
