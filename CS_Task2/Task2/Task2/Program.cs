@@ -17,21 +17,16 @@ namespace Task2
                 provider.GenerateIV();
                 using (FileStream outputFile = new FileStream("./output", FileMode.Create))
                 {
-                    using (var encryptor = provider.CreateEncryptor(provider.Key, provider.IV))
+                    using (var cs = new CryptoStream(outputFile, provider.CreateEncryptor(), CryptoStreamMode.Write))
                     {
-                        outputFile.Write(provider.IV, 0, 16);
-                        using (var cs = new CryptoStream(outputFile, encryptor, CryptoStreamMode.Write))
+                        using (FileStream inputFile = new FileStream(@"../../../file", FileMode.Open))
                         {
-                            using (FileStream fsInput = new FileStream(@"../../../photo.jpg", FileMode.Open))
+                            int data;
+                            while ((data = inputFile.ReadByte()) != -1)
                             {
-                                int data;
-                                while ((data = fsInput.ReadByte()) != -1)
-                                {
-                                    cs.WriteByte((byte)data);
-                                }
+                                cs.WriteByte((byte)data);
                             }
                         }
-
                     }
                 }
             }
