@@ -60,8 +60,8 @@ namespace WinFormsApp1
         {
             EncryptTime.Reset();
             EncryptTime.Start();
-            _algorithm.Key = Key;
-            _algorithm.IV = IV;
+            //_algorithm.Key = Key;
+            //_algorithm.IV = IV;
             MemoryStream ms = new MemoryStream();
             CryptoStream cs = new CryptoStream(ms, _algorithm.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(mess, 0, mess.Length);
@@ -75,8 +75,6 @@ namespace WinFormsApp1
         {
             DecryptTime.Reset();
             DecryptTime.Start();
-            _algorithm.Key = Key;
-            _algorithm.IV = IV;
 
             var plaintext = new byte[mess.Length];
             MemoryStream ms = new MemoryStream(mess);
