@@ -27,8 +27,8 @@ namespace WinFormsApp1
         {
             this.comboBox1.DataSource = Enum.GetValues(typeof(SymmetricAlgorithmEnum));
             var (key, iv) = CryptographyService.InitKeyAndIV();
-            textBox5.Text = Encoding.ASCII.GetString(key);
-            textBox6.Text = Encoding.ASCII.GetString(iv);
+            textBox5.Text = Convert.ToHexString(key);
+            textBox6.Text = Convert.ToHexString(iv);
 
         }
 
@@ -36,20 +36,18 @@ namespace WinFormsApp1
         {
             CryptographyService.InitKeyAndIV();
             var (key, iv) = CryptographyService.InitKeyAndIV();
-            textBox5.Text = Encoding.ASCII.GetString(key);
-            textBox6.Text = Encoding.ASCII.GetString(iv);
+            textBox5.Text = Convert.ToHexString(key);
+            textBox6.Text = Convert.ToHexString(iv);
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            if (textBox5.TextLength > 0 && textBox6.TextLength > 0)
-            CryptographyService.SetKeyAndIV(Encoding.ASCII.GetBytes(textBox5.Text), Encoding.ASCII.GetBytes(textBox6.Text));
+            CryptographyService.SetKey(Convert.FromHexString(textBox5.Text));
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-            if (textBox5.TextLength > 0 && textBox6.TextLength > 0)
-                CryptographyService.SetKeyAndIV(Encoding.ASCII.GetBytes(textBox5.Text), Encoding.ASCII.GetBytes(textBox6.Text));
+                CryptographyService.SetIV(Convert.FromHexString(textBox6.Text));
         }
 
         private void button2_Click(object sender, EventArgs e)

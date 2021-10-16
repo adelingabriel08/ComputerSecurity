@@ -51,9 +51,13 @@ namespace WinFormsApp1
             return (_algorithm.Key, _algorithm.IV);
         }
 
-        public static void SetKeyAndIV(byte[] key, byte[] iv)
+        public static void SetKey(byte[] key)
         {
             _algorithm.Key = key;
+        }
+
+        public static void SetIV(byte[] iv)
+        {
             _algorithm.IV = iv;
         }
 
