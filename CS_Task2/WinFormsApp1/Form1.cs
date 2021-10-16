@@ -56,7 +56,7 @@ namespace WinFormsApp1
         {
             var bytes = Encoding.UTF8.GetBytes(textBox1.Text);
             var cipher = CryptographyService.Encrypt(bytes);
-            textBox2.Text = Encoding.UTF8.GetString(cipher);
+            textBox2.Text = Convert.ToHexString(cipher);
             label3.Text = CryptographyService.EncryptTime.ElapsedMilliseconds.ToString() + " ms";
         }
 
@@ -77,7 +77,7 @@ namespace WinFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var bytes = Encoding.UTF8.GetBytes(textBox3.Text);
+            var bytes = Convert.FromHexString(textBox3.Text);
             var ascii = CryptographyService.Decrypt(bytes);
             textBox4.Text = Encoding.UTF8.GetString(ascii);
             label12.Text = CryptographyService.DecryptTime.ElapsedMilliseconds.ToString() + " ms";
