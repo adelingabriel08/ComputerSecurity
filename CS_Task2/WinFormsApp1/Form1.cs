@@ -26,34 +26,37 @@ namespace WinFormsApp1
         private void SetInitialData()
         {
             this.comboBox1.DataSource = Enum.GetValues(typeof(SymmetricAlgorithmEnum));
-            CryptographyService.InitKeyAndIV();
-            textBox5.Text = Convert.ToBase64String(CryptographyService.Key);
-            textBox6.Text = Convert.ToBase64String(CryptographyService.IV);
+            var (key, iv) = CryptographyService.InitKeyAndIV();
+            textBox5.Text = Encoding.ASCII.GetString(key);
+            textBox6.Text = Encoding.ASCII.GetString(iv);
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             CryptographyService.InitKeyAndIV();
-            textBox5.Text = Convert.ToBase64String(CryptographyService.Key);
-            textBox6.Text = Convert.ToBase64String(CryptographyService.IV);
+            var (key, iv) = CryptographyService.InitKeyAndIV();
+            textBox5.Text = Encoding.ASCII.GetString(key);
+            textBox6.Text = Encoding.ASCII.GetString(iv);
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            CryptographyService.Key = Encoding.ASCII.GetBytes(textBox5.Text);
+            if (textBox5.TextLength > 0 && textBox6.TextLength > 0)
+            CryptographyService.SetKeyAndIV(Encoding.ASCII.GetBytes(textBox5.Text), Encoding.ASCII.GetBytes(textBox6.Text));
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-             CryptographyService.IV = Encoding.ASCII.GetBytes(textBox6.Text);
+            if (textBox5.TextLength > 0 && textBox6.TextLength > 0)
+                CryptographyService.SetKeyAndIV(Encoding.ASCII.GetBytes(textBox5.Text), Encoding.ASCII.GetBytes(textBox6.Text));
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var bytes = Encoding.ASCII.GetBytes(textBox1.Text);
-            var hex = CryptographyService.Encrypt(bytes);
-            textBox2.Text = Convert.ToBase64String(hex);
+            var bytes = Encoding.UTF8.GetBytes(textBox1.Text);
+            var cipher = CryptographyService.Encrypt(bytes);
+            textBox2.Text = Encoding.UTF8.GetString(cipher);
             label3.Text = CryptographyService.EncryptTime.ElapsedMilliseconds.ToString() + " ms";
         }
 
@@ -76,8 +79,13 @@ namespace WinFormsApp1
         {
             var bytes = Encoding.UTF8.GetBytes(textBox3.Text);
             var ascii = CryptographyService.Decrypt(bytes);
-            textBox4.Text = Convert.ToBase64String(ascii);
+            textBox4.Text = Encoding.UTF8.GetString(ascii);
             label12.Text = CryptographyService.DecryptTime.ElapsedMilliseconds.ToString() + " ms";
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -16,10 +16,6 @@ namespace WinFormsApp1
 
         private static SymmetricAlgorithm _algorithm = DES.Create();
 
-        public static byte[] Key { get; set; }
-        public static byte[] IV { get; set; }
-
-
         public static void SetSymmetricAlgorithm(SymmetricAlgorithmEnum algorithm)
         {
             switch(algorithm)
@@ -34,7 +30,6 @@ namespace WinFormsApp1
                     _algorithm = Rijndael.Create();
                     break;
             }
-            _algorithm.Padding = PaddingMode.PKCS7;
             InitKeyAndIV();
 
 
@@ -48,27 +43,31 @@ namespace WinFormsApp1
             SetSymmetricAlgorithm(alg);
         }
 
-        public static void InitKeyAndIV()
+        public static (byte[] key, byte[] iv) InitKeyAndIV()
         {
             _algorithm.GenerateIV();
-            IV = _algorithm.IV;
             _algorithm.GenerateKey();
-            Key = _algorithm.Key;
+
+            return (_algorithm.Key, _algorithm.IV);
+        }
+
+        public static void SetKeyAndIV(byte[] key, byte[] iv)
+        {
+            _algorithm.Key = key;
+            _algorithm.IV = iv;
         }
 
         public static byte[] Encrypt(byte[] mess)
         {
             EncryptTime.Reset();
             EncryptTime.Start();
-            //_algorithm.Key = Key;
-            //_algorithm.IV = IV;
             MemoryStream ms = new MemoryStream();
             CryptoStream cs = new CryptoStream(ms, _algorithm.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(mess, 0, mess.Length);
             cs.Close();
             EncryptTime.Stop();
-            return ms.ToArray();
-
+            var encrypted = ms.ToArray();
+            return encrypted;
         }
 
         public static byte[] Decrypt(byte[] mess)
