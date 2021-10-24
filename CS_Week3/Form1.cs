@@ -56,7 +56,7 @@ namespace CS_Week3
             if (CompareByteArrays(computedMac, result, computedMac.Length)) label9.Text = "It's a match!";
             else label9.Text = "It's not a match!";
 
-            label8.Text = "Time spent: " + timer.ElapsedMilliseconds + " ms";
+            label8.Text = "Time spent: " + (1000000000.0 * (double)timer.ElapsedTicks / Stopwatch.Frequency) + " ns";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,7 +69,7 @@ namespace CS_Week3
             textBox3.Text = Convert.ToBase64String(mac);
             textBox4.Text = Convert.ToHexString(mac);
 
-            label8.Text = "Time spent: " + timer.ElapsedMilliseconds + " ms";
+            label8.Text = "Time spent: " + (1000000000.0 * (double)timer.ElapsedTicks / Stopwatch.Frequency) + " ns";
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
