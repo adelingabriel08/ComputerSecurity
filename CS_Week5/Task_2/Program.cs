@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CS_Week5
+namespace Task_2
 {
     class Program
     {
@@ -21,39 +21,18 @@ namespace CS_Week5
 
         public static void Generate(int bits)
         {
-            RSACryptoServiceProvider myrsa = new RSACryptoServiceProvider(1600);
+            DSACryptoServiceProvider myrsa = new DSACryptoServiceProvider(512);
             int size;
             int count = 100;
             timer.Start();
             for (int i = 0; i < count; i++)
             {
-                myrsa = new RSACryptoServiceProvider(1024);
+                myrsa = new DSACryptoServiceProvider(1024);
                 size = myrsa.KeySize;
             }
             timer.Stop();
             Console.WriteLine($"({bits})Key creation: " + (timer.ElapsedTicks / (10 * count)).ToString() + " ms");
 
-
-            byte[] plain = new byte[20];
-            byte[] ciphertext = myrsa.Encrypt(plain, true);
-            timer.Reset();
-            timer.Start();
-            for (int i = 0; i < count; i++)
-            {
-                ciphertext = myrsa.Encrypt(plain, true);
-            }
-            timer.Stop();
-            Console.WriteLine($"({bits})Encryption: " + (timer.ElapsedTicks / (10 * count)).ToString() + " ms");
-
-
-            timer.Reset();
-            timer.Start();
-            for (int i = 0; i < count; i++)
-            {
-                plain = myrsa.Decrypt(ciphertext, true);
-            }
-            timer.Stop();
-            Console.WriteLine($"({bits})Decryption: " + (timer.ElapsedTicks / (10 * count)).ToString() + " ms");
 
 
             SHA256Managed myHash = new SHA256Managed();
@@ -64,7 +43,7 @@ namespace CS_Week5
             timer.Start();
             for (int i = 0; i < count; i++)
             {
-                signature = myrsa.SignData(Encoding.ASCII.GetBytes(some_text), myHash);
+                signature = myrsa.SignData(Encoding.ASCII.GetBytes(some_text));
             }
             timer.Stop();
             Console.WriteLine($"({bits})Signing: " + (timer.ElapsedTicks / (10 * count)).ToString() + " ms");
@@ -75,7 +54,7 @@ namespace CS_Week5
             timer.Start();
             for (int i = 0; i < count; i++)
             {
-                myrsa.VerifyData(Encoding.ASCII.GetBytes(some_text), myHash, signature);
+                myrsa.VerifyData(Encoding.ASCII.GetBytes(some_text), signature);
             }
             timer.Stop();
             Console.WriteLine($"({bits})Verifying signature: " + (timer.ElapsedTicks / (10 * count)).ToString() + " ms");
